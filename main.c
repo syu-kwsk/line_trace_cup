@@ -31,8 +31,24 @@ void light(int light_kind, int light_time){
 	LED(0);
 }
 
-void run(int left_motor, int right_motor){
+void motor(int left_motor, int right_motor){
 	Mtr_Run_lv(right_motor, -left_motor, 0, 0, 0, 0);
+}
+void run(int runKind){
+
+	if(runKind == 0){
+		motor(mtrHigh, mtrHigh);
+	}
+	else if(runKind == 1){
+		motor(mtrHigh, mtrStop);
+	}
+	else if(runKind == 2){
+		motor(mtrStop, mtrHigh);
+	}
+	else if(runKind == 3){
+		motor(mtrBackHigh,mtrBackHigh);
+	}
+
 }
 
 int sensor(){
