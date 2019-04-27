@@ -107,6 +107,7 @@ void backModify(int checkNum){
 			changeNum++;
 		}
 	}
+
 }
 
 int  main(void)
@@ -132,9 +133,19 @@ int  main(void)
 		}
 		if(stage == 1){
 			backModify(10);
+			while(sensor() != bb){
+				run(straight);
+			}
 			stage++;
 		}
 		if(stage == 2){
+			while(sensor() == bb){
+				run(straight);
+			}
+			stage++;
+		}
+
+		if(stage == 3){
 			switch(sensor()){
 			case bb: run(straight); stage++; break;
 			case ww: run(straight); break;
@@ -142,13 +153,14 @@ int  main(void)
 			case wb: run(turnRight); break;
 			}
 		}
-		if(stage == 3){
+		if(stage == 4){
 			backModify(10);
 			stage++;
 		}
-		if(stage == 4){
+		if(stage == 5){
 			run(stop);
 		}
+
 
 
 
