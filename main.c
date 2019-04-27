@@ -8,12 +8,15 @@
 #define mtrHigh 10000
 #define mtrLow 5000
 #define mtrBackHigh -10000
-#define mtrBackLow 5000
+#define mtrBackLow -5000
 #define mtrStop 0
 
 /*グローバル変数***********************************************************/
-enum{
+enum sensorKind{
 	bb, ww, wb, bw
+};
+enum runKind{
+	straight, turnRight, turnLeft, back, backRight, backLeft, rotate, stop
 };
 
 /*メイン関数***********************************************************/
@@ -36,17 +39,29 @@ void motor(int left_motor, int right_motor){
 }
 void run(int runKind){
 
-	if(runKind == 0){
+	if(runKind == straight){
 		motor(mtrHigh, mtrHigh);
 	}
-	else if(runKind == 1){
+	else if(runKind == turnRight){
 		motor(mtrHigh, mtrStop);
 	}
-	else if(runKind == 2){
+	else if(runKind == turnLeft){
 		motor(mtrStop, mtrHigh);
 	}
-	else if(runKind == 3){
+	else if(runKind == back){
 		motor(mtrBackHigh,mtrBackHigh);
+	}
+	else if(runKind == backRight){
+		motor(mtrBackHigh,mtrStop);
+	}
+	else if(runKind == backLeft){
+		motor(mtrStop,mtrBackHigh);
+	}
+	else if(runKind == rotate){
+		motor(mtrHigh,mtrBackHigh);
+	}
+	else if(runKind == stop){
+		motor(mtrStop,mtrStop);
 	}
 
 }
@@ -72,6 +87,18 @@ int sensor(){
 }
 
 
+void backModify(int checkNum){
+	for(int i = 0; i < checkNum; i++){
+		switch(sensor()){
+		case bb: run(straight);break;
+		case ww: run(back); break;
+		case bw: run(backLeft); break;
+		case wb: run(backRight); break;
+		}
+	}
+
+}
+
 int  main(void)
 {
 	const unsigned short MainCycle = 60;
@@ -82,6 +109,37 @@ int  main(void)
 	while(getSW() != 1);
 	while(getSW() == 1);
 
+	backModify(10);
+
+
+
+
+	//		if(stage == 0){
+	//			switch(sensor()){
+	//			case bb: run(straight); stage++; break;
+	//			case ww: run(straight); break;
+	//			case bw: run(turnLeft); break;
+	//			case wb: run(turnRight); break;
+	//			}
+	//		}
+	//		if(stage == 1){
+	//			run(stop);
+	//			backModify(1000);
+	//			stage++;
+	//		}
+	//		if(stage == 2){
+	//			switch(sensor()){
+	//			case bb: run(straight); stage++; break;
+	//			case ww: run(straight); break;
+	//			case bw: run(turnLeft); break;
+	//			case wb: run(turnRight); break;
+	//			}
+	//		}
+	//		if(stage == 3){
+	//			backModify(1000);
+	//			stage++;
+	//		}
+	//
 
 
 	return 0;
@@ -89,28 +147,7 @@ int  main(void)
 
 
 
-/*
-void Mtr_Run_lv(right, left(negative), 0, 0, 0, 0);
-void getSW(); == 1(on)
-              == 0(off)
 
-
-void LED(kind); ==0(off)
-				==1(green on)
-				==2(orenge on)
-			    ==3(both on)
-
-void AdRead(chanel); ==0(left)
-                     ==1(right)
-					 > 500 black
-					 < 500 white
-
-void BuzzerSet(pitch, vol); pitch: 0~255
-                            vol:   0~128
-void BuzzerStart();
-void BuzzerStop();
-
- */
 
 
 
