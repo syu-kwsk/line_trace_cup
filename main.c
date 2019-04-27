@@ -12,8 +12,11 @@
 #define mtrStop 0
 
 /*グローバル変数***********************************************************/
+enum sensorType{
+	rightSide, leftSide, bothSide
+};
 enum sensorKind{
-	bb, ww, wb, bw
+	bb, ww, wb, bw, rb, rw, lb, lw
 };
 enum runKind{
 	straight, turnRight, turnLeft, back, backRight, backLeft, rotate, stop
@@ -66,24 +69,45 @@ void run(int runKind){
 
 }
 
-int sensor(){
+int sensor(int sensorType){
 	const int borderJudgeNum = 500;
-	static int resultSensorNum = 0;
+	static int resultSensor = 8;
 
-	if(ADRead(0) > borderJudgeNum && ADRead(1) > borderJudgeNum){
-		resultSensorNum = bb;
+
+	if(sensorType == rightSide){
+		if(ADRead(1) > borderJudgeNum){
+			resultSensor = rb;
+		}
+		else if(ADRead(1) < borderJudgeNum){
+			resultSensor = rw;
+		}
 	}
-	else if(ADRead(0) < borderJudgeNum && ADRead(1) < borderJudgeNum){
-		resultSensorNum = ww;
+	else if(sensorType == leftSide){
+		if(ADRead(0) > borderJudgeNum){
+			resultSensor = lb;
+		}
+		else if(ADRead(0) < borderJudgeNum){
+			resultSensor = lw;
+		}
 	}
-	else if(ADRead(0) < borderJudgeNum && ADRead(1) > borderJudgeNum){
-		resultSensorNum = wb;
-	}
-	else if(ADRead(0) > borderJudgeNum && ADRead(1) < borderJudgeNum){
-		resultSensorNum = bw;
+	else if(sensorType == bothSide){
+		if(ADRead(0) > borderJudgeNum && ADRead(1) > borderJudgeNum){
+			resultSensor = bb;
+		}
+		else if(ADRead(0) < borderJudgeNum && ADRead(1) < borderJudgeNum){
+			resultSensor = ww;
+		}
+		else if(ADRead(0) < borderJudgeNum && ADRead(1) > borderJudgeNum){
+			resultSensor = wb;
+		}
+		else if(ADRead(0) > borderJudgeNum && ADRead(1) < borderJudgeNum){
+			resultSensor = bw;
+		}
 	}
 
-	return resultSensorNum;
+
+
+	return resultSensor;
 }
 
 
@@ -94,18 +118,21 @@ void backModify(int checkNum){
 
 	while(changeNum < checkNum){
 
-		beforeRunSensor = sensor();
-		switch(sensor()){
+		beforeRunSensor = sensor(bothSide);
+		switch(sensor(bothSide)){
 		case bb: run(back);break;
 		case ww: run(straight); break;
 		case bw: run(turnLeft); break;
 		case wb: run(turnRight); break;
 		}
-		afterRunSensor = sensor();
+		afterRunSensor = sensor(bothSide);
 
 		if(beforeRunSensor != afterRunSensor){
 			changeNum++;
 		}
+	}
+	while(sensor(bothSide) == bb){
+		run(straight);
 	}
 
 }
@@ -122,44 +149,15 @@ int  main(void)
 
 
 	while(1){
-		static int stage;
-		if(stage == 0){
-			switch(sensor()){
-			case bb: run(straight); stage++; break;
-			case ww: run(straight); break;
-			case bw: run(turnLeft); break;
-			case wb: run(turnRight); break;
-			}
-		}
-		if(stage == 1){
-			backModify(10);
-			while(sensor() != bb){
-				run(straight);
-			}
-			stage++;
-		}
-		if(stage == 2){
-			while(sensor() == bb){
-				run(straight);
-			}
-			stage++;
-		}
 
-		if(stage == 3){
-			switch(sensor()){
-			case bb: run(straight); stage++; break;
-			case ww: run(straight); break;
-			case bw: run(turnLeft); break;
-			case wb: run(turnRight); break;
-			}
-		}
-		if(stage == 4){
-			backModify(10);
-			stage++;
-		}
-		if(stage == 5){
-			run(stop);
-		}
+
+
+
+
+
+
+
+
 
 
 
