@@ -88,15 +88,27 @@ int sensor(){
 
 
 void backModify(int checkNum){
-	for(int i = 0; i < checkNum; i++){
+
+	int beforeRunSensor, afterRunSensor;
+	int changeNum = 0;
+
+	while(changeNum < checkNum){
+
+		beforeRunSensor = sensor();
 		switch(sensor()){
-		case bb: run(straight);break;
-		case ww: run(back); break;
-		case bw: run(backLeft); break;
-		case wb: run(backRight); break;
+		case bb: run(back);break;
+		case ww: run(straight); break;
+		case bw: run(turnLeft); break;
+		case wb: run(turnRight); break;
+		}
+		afterRunSensor = sensor();
+
+		if(beforeRunSensor != afterRunSensor){
+			changeNum++;
+			run(stop);
+			Wait(1000);
 		}
 	}
-
 }
 
 int  main(void)
@@ -110,9 +122,6 @@ int  main(void)
 	while(getSW() == 1);
 
 	backModify(10);
-
-
-
 
 	//		if(stage == 0){
 	//			switch(sensor()){
