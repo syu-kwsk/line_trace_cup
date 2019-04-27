@@ -68,7 +68,7 @@ void run(int runKind){
 
 int sensor(){
 	const int borderJudgeNum = 500;
-	int resultSensorNum = 0;
+	static int resultSensorNum = 0;
 
 	if(ADRead(0) > borderJudgeNum && ADRead(1) > borderJudgeNum){
 		resultSensorNum = bb;
@@ -105,8 +105,6 @@ void backModify(int checkNum){
 
 		if(beforeRunSensor != afterRunSensor){
 			changeNum++;
-			run(stop);
-			Wait(1000);
 		}
 	}
 }
@@ -121,40 +119,43 @@ int  main(void)
 	while(getSW() != 1);
 	while(getSW() == 1);
 
-	backModify(10);
 
-	//		if(stage == 0){
-	//			switch(sensor()){
-	//			case bb: run(straight); stage++; break;
-	//			case ww: run(straight); break;
-	//			case bw: run(turnLeft); break;
-	//			case wb: run(turnRight); break;
-	//			}
-	//		}
-	//		if(stage == 1){
-	//			run(stop);
-	//			backModify(1000);
-	//			stage++;
-	//		}
-	//		if(stage == 2){
-	//			switch(sensor()){
-	//			case bb: run(straight); stage++; break;
-	//			case ww: run(straight); break;
-	//			case bw: run(turnLeft); break;
-	//			case wb: run(turnRight); break;
-	//			}
-	//		}
-	//		if(stage == 3){
-	//			backModify(1000);
-	//			stage++;
-	//		}
-	//
+	while(1){
+		static int stage;
+		if(stage == 0){
+			switch(sensor()){
+			case bb: run(straight); stage++; break;
+			case ww: run(straight); break;
+			case bw: run(turnLeft); break;
+			case wb: run(turnRight); break;
+			}
+		}
+		if(stage == 1){
+			backModify(10);
+			stage++;
+		}
+		if(stage == 2){
+			switch(sensor()){
+			case bb: run(straight); stage++; break;
+			case ww: run(straight); break;
+			case bw: run(turnLeft); break;
+			case wb: run(turnRight); break;
+			}
+		}
+		if(stage == 3){
+			backModify(10);
+			stage++;
+		}
+		if(stage == 4){
+			run(stop);
+		}
 
 
+
+
+	}
 	return 0;
 }
-
-
 
 
 
