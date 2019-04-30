@@ -15,18 +15,6 @@
 /*メイン関数***********************************************************/
 
 
-int process(int before, int after){
-	printf("process");
-	return 0;
-}
-
-int output(int processKind){
-	printf("output");
-	return 0;
-}
-
-
-
 int  main(void)
 {
 	const unsigned short MainCycle = 60;
@@ -37,29 +25,23 @@ int  main(void)
 	while(getSW() != 1);
 	while(getSW() == 1);
 
-	static int processKind;
 
 
 
 	while(1){
 		/*input*/
-		static int beforeOutputSensor = 0;
-		static int afterInputSensor = 0;
-
-		beforeOutputSensor = sensor(bothSide);
 
 
 
 		/*process*/
 
-		processKind = process(beforeOutputSensor, afterInputSensor);
+
 
 
 		/*output*/
 
-		output(processKind);
 
-		afterInputSensor = sensor(bothSide);
+
 
 	}
 
