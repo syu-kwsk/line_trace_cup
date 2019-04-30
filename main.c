@@ -6,6 +6,9 @@
 #include <stdio.h>
 
 #include "basicFunctions.h"
+#include "inputSensor.h"
+#include "process.h"
+
 
 /*マクロ***********************************************************/
 
