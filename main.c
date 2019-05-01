@@ -33,6 +33,10 @@ int  main(void)
 
 	while(1){
 		/*input*/
+		static int input[6];
+		input[0] = sensor(bothSide);
+		input[1] = sensor(rightSide);
+		input[2] = sensor(leftSide);
 
 
 
@@ -42,6 +46,11 @@ int  main(void)
 
 
 		/*output*/
+
+		input[3] = sensor(bothSide);
+		input[4] = sensor(rightSide);
+		input[5] = sensor(leftSide);
+
 
 
 
