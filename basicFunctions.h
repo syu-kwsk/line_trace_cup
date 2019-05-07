@@ -16,23 +16,24 @@
 #define mtrStop 0
 
 /*グローバル変数***********************************************************/
-enum SENSORTYPE{
+typedef enum {
 	rightSide, leftSide, bothSide
-};
-enum SENSORKIND{
+} sensorType;
+typedef enum {
 	bb, ww, wb, bw, rb, rw, lb, lw
-};
-enum RUNKIND{
+} sensorKind;
+
+typedef enum {
 	straight, turnRight, turnLeft, back, backRight, backLeft, rotate, stop
-};
+}runKind;
 
 
 /*基本関数***********************************************************/
 void sound(int sound_pitch, int sound_volume,int sound_time);
 void light(int light_kind, int light_time);
 void motor(int left_motor, int right_motor);
-void run(int runKind);
-int sensor(int sensorType);
+void run(runKind runKind);
+sensorKind sensor(sensorType sensorType);
 void backModify(int checkNum);
 
 

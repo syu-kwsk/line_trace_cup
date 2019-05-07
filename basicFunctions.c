@@ -35,7 +35,7 @@ void light(int light_kind, int light_time){
 void motor(int left_motor, int right_motor){
 	Mtr_Run_lv(right_motor, -left_motor, 0, 0, 0, 0);
 }
-void run(int runKind){
+void run(runKind runKind){
 
 	if(runKind == straight){
 		motor(mtrHigh, mtrHigh);
@@ -64,9 +64,9 @@ void run(int runKind){
 
 }
 
-int sensor(int sensorType){
+sensorKind sensor(sensorType sensorType){
 	const int borderJudgeNum = 500;
-	static int resultSensor = 8;
+	static sensorKind resultSensor = 8;
 
 
 	if(sensorType == rightSide){
