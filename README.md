@@ -1,5 +1,5 @@
 # line_trace_cup
-# function
+# Function
 
 ```C
 void Mtr_Run_lv(right, left(negative), 0, 0, 0, 0);
@@ -31,5 +31,5 @@ vol:   0~128
 void BuzzerStart();
 void BuzzerStop();
 ```
-# presentation
-[https://gitpitch.com/syu-kwsk/line_trace_cup](https://gitpitch.com/syu-kwsk/line_trace_cup)
+# Notice
+[competition summary](https://gitpitch.com/syu-kwsk/line_trace_cup)
