@@ -14,6 +14,19 @@
 #include "basicFunctions.h"
 #include "process.h"
 
-void process(int inputSensor){
+int process(int *inputSensor){
+	int beforeSensor[3];
+	int afterSensor[3];
+
+
+
+	for(int i = 0; i < 3; i++){
+		beforeSensor[i] = inputSensor[i];
+		afterSensor[i]  = inputSensor[i+3];
+	}
+	if(beforeSensor[0] == afterSensor[0]){
+		processKind
+
+	}
 
 }

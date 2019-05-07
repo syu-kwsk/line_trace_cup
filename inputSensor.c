@@ -15,5 +15,11 @@
 
 int inputSensor(){
 
-	return 0;
+	static int input[6];
+	input[0] = sensor(bothSide);
+	input[1] = sensor(rightSide);
+	input[2] = sensor(leftSide);
+
+
+	return *input;
 }

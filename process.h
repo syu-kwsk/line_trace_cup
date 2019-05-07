@@ -8,7 +8,7 @@
 #ifndef PROCESS_H_
 #define PROCESS_H_
 
-void process(int inputSensor);
+void process(int *inputSensor);
 
 
 #endif /* PROCESS_H_ */
